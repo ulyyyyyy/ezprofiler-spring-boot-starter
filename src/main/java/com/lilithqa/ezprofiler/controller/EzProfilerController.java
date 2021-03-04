@@ -1,4 +1,4 @@
-package com.github.xjs.ezprofiler.controller;
+package com.lilithqa.ezprofiler.controller;
 
 import java.util.Base64;
 import java.util.Map;
@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.xjs.ezprofiler.annotation.Profiler;
-import com.github.xjs.ezprofiler.config.EzProfilerProperties;
-import com.github.xjs.ezprofiler.mapping.PropertySourcedMapping;
-import com.github.xjs.ezprofiler.scanner.ProfileInfoHolder;
-import com.github.xjs.ezprofiler.util.WebUtil;
+import com.lilithqa.ezprofiler.annotation.Profiler;
+import com.lilithqa.ezprofiler.config.EzProfilerProperties;
+import com.lilithqa.ezprofiler.mapping.PropertySourcedMapping;
+import com.lilithqa.ezprofiler.scanner.ProfileInfoHolder;
+import com.lilithqa.ezprofiler.util.MyResponseUtil;
 
 /**
  * @author 605162215@qq.com
@@ -26,7 +26,7 @@ public class EzProfilerController {
 	
 	public static final String DEFAULT_URL = "/profiler";
 	
-	private EzProfilerProperties properties;
+	private final EzProfilerProperties properties;
 	
 	public EzProfilerController(EzProfilerProperties properties) {
 		this.properties = properties;
@@ -47,11 +47,11 @@ public class EzProfilerController {
 			if(auth.equals(authServer)) {
 				return ProfileInfoHolder.getAllAccessInfo();
 			}else {
-				WebUtil.ret401(request, response);
+				MyResponseUtil.retError(request, response);
 				return null;
 			}
 		} else {
-			WebUtil.ret401(request, response);
+			MyResponseUtil.retError(request, response);
 			return null;
 		}
 	}

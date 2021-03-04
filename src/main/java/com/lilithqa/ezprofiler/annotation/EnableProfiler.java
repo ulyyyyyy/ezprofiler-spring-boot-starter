@@ -1,15 +1,15 @@
-package com.github.xjs.ezprofiler.annotation;
+package com.lilithqa.ezprofiler.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import org.springframework.context.annotation.Import;
 
-import com.github.xjs.ezprofiler.config.EzProfilerConfiguration;
+import com.lilithqa.ezprofiler.config.EzProfilerConfiguration;
 
 /**
- * @author 605162215@qq.com
- *
+ * @author 黑黑
+ * @apiNote
  * @date 2018年7月2日 上午8:10:14<br/>
  */
 @Retention(value = java.lang.annotation.RetentionPolicy.RUNTIME)

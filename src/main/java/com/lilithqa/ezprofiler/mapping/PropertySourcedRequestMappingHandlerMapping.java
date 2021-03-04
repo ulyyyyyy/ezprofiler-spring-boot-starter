@@ -1,4 +1,4 @@
-package com.github.xjs.ezprofiler.mapping;
+package com.lilithqa.ezprofiler.mapping;
 
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
@@ -22,14 +22,14 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.util.UriTemplate;
 
 /**
- * @author 605162215@qq.com
- *
+ * @author 黑黑
+ * @apiNote
  * @date 2018年7月2日 上午8:21:14<br/>
  */
 public class PropertySourcedRequestMappingHandlerMapping extends RequestMappingHandlerMapping {
 
 	private final static Logger logger = LoggerFactory.getLogger(PropertySourcedRequestMappingHandlerMapping.class);
-	private final Map<String, HandlerMethod> handlerMethods = new LinkedHashMap<String, HandlerMethod>();
+	private final Map<String, HandlerMethod> handlerMethods = new LinkedHashMap<>();
 	private final Environment environment;
 	private final Object handler;
 
@@ -38,12 +38,17 @@ public class PropertySourcedRequestMappingHandlerMapping extends RequestMappingH
 		this.handler = handler;
 	}
 
+	/**
+	 *  初始化处理方法
+	 */
 	@Override
 	protected void initHandlerMethods() {
 		setOrder(Ordered.HIGHEST_PRECEDENCE + 1000);
 		Class<?> clazz = handler.getClass();
 		if (isHandler(clazz)) {
+			// 遍历类中所有方法
 			for (Method method : clazz.getMethods()) {
+				// 判断方法是否是Object类上的方法
 				if(ReflectionUtils.isObjectMethod(method)) {
 					continue;
 				}
@@ -66,9 +71,16 @@ public class PropertySourcedRequestMappingHandlerMapping extends RequestMappingH
 		}
 	}
 
+	/**
+	 *
+	 * @param mapper
+	 * @return
+	 */
 	private String mappingPath(final PropertySourcedMapping mapper) {
-		String propertyKey = mapper.propertyKey();// ezprofiler.url
-		String propertyValue = environment.getProperty(propertyKey);// my.profiler
+		// ezprofiler.url
+		String propertyKey = mapper.propertyKey();
+		// my.profiler
+		String propertyValue = environment.getProperty(propertyKey);
 		if (propertyValue != null) {
 			String realKey = String.format("${%s}", propertyKey);
 			return propertyValue.replace(realKey, propertyValue);
@@ -76,6 +88,11 @@ public class PropertySourcedRequestMappingHandlerMapping extends RequestMappingH
 		return null;
 	}
 
+	/**
+	 * 判断注解类型是否存在再
+	 * @param beanType 方法类型
+	 * @return
+	 */
 	@Override
 	protected boolean isHandler(Class<?> beanType) {
 		return ((AnnotationUtils.findAnnotation(beanType, RestController.class) != null)

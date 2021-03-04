@@ -1,4 +1,4 @@
-package com.github.xjs.ezprofiler.scanner;
+package com.lilithqa.ezprofiler.scanner;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
@@ -10,20 +10,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author 605162215@qq.com
- *
- * @date 2017年9月21日 下午3:02:30<br>
- * 
- * 工作队列
+ * @author 黑黑
+ * @apiNote 工作队列
+ * @date 2021-03-04
  */
 public class ProfilerQueue{
 	
-	private static Logger log = LoggerFactory.getLogger(ProfilerQueue.class);
+	private final static Logger log = LoggerFactory.getLogger(ProfilerQueue.class);
 
-	private BlockingQueue<ProfileInfo> queue;
+	private final BlockingQueue<ProfileInfo> queue;
 	private final ThreadFactory threadFactory;
 	private Thread thread;
-	private AtomicBoolean started = new AtomicBoolean(false);
+	private final AtomicBoolean started = new AtomicBoolean(false);
 	private volatile boolean shouldContinue = false;
 
 	public ProfilerQueue() {
@@ -43,6 +41,7 @@ public class ProfilerQueue{
 		log.info("WorkingQueue start");
 		shouldContinue = true;
 		thread = threadFactory.newThread(new Runnable() {
+			@Override
 			public void run() {
 				while (shouldContinue) {
 					try {
@@ -64,6 +63,10 @@ public class ProfilerQueue{
 		log.info("WorkingQueue end");
 	}
 
+	/**
+	 * 将Profiler数据入队列，
+	 * @param info
+	 */
 	public void addProfileInfo(ProfileInfo info) {
 		if (!started.get()) {
 			start();

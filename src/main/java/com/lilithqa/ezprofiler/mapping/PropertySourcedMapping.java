@@ -1,4 +1,4 @@
-package com.github.xjs.ezprofiler.mapping;
+package com.lilithqa.ezprofiler.mapping;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,9 +8,9 @@ import java.lang.annotation.Target;
 import org.springframework.web.bind.annotation.Mapping;
 
 /**
- * @author 605162215@qq.com
- *
- * @date 2018年7月2日 上午8:42:22<br/>
+ * @author 黑黑
+ * @apiNote
+ * @date 2021-03-04
  */
 @Target({ ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
