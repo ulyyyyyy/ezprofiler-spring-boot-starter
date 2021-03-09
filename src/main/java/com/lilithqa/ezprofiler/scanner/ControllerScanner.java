@@ -31,7 +31,7 @@ public class ControllerScanner implements BeanPostProcessor {
     private static final Logger log = LoggerFactory.getLogger(ControllerScanner.class);
 
     @Autowired
-    EzProfilerProperties properties;
+    private EzProfilerProperties properties;
 
     private final ProfilerQueue queue = new ProfilerQueue();
 
@@ -95,7 +95,6 @@ public class ControllerScanner implements BeanPostProcessor {
                 boolean occurError = true;
                 try {
                     // requestMapping注解的 value 值，即对应的 uri
-                    // question1 如果类包含一个 requestMapping("xx")，则无法正常识别，看能否改进
                     uri = requestMappingAnnotation.value()[0];
                     startAt = System.currentTimeMillis();
                     // 正常执行当前方法
@@ -104,7 +103,7 @@ public class ControllerScanner implements BeanPostProcessor {
                     occurError = false;
                     return result;
                 } catch (Exception e) {
-                    // 如果执行方法出错，认为将 occurError 置1
+                    // 如果执行方法出错，将 occurError 置1
                     endAt = System.currentTimeMillis();
                     occurError = true;
                     throw e;

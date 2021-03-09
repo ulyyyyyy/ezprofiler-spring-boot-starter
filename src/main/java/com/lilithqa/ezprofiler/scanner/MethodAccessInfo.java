@@ -1,5 +1,6 @@
 package com.lilithqa.ezprofiler.scanner;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -33,62 +34,29 @@ public class MethodAccessInfo {
      */
     private double successRate;
     /**
-     * 调用请求最小时间
+     * 调用请求最小耗时
      */
     private long minMills;
     /**
-     * 调用请求最大时间
+     * 调用请求最大耗时
      */
     private long maxMills;
     /**
-     * 调用请求平均时间
+     * 调用请求平均耗时
      */
     private long avgMills;
     /**
-     * 请求最大时间日期
+     * 请求最大耗时日期
      */
     private Date maxInvokeAt;
     /**
-     * 最近一日调用次数
-     */
-    private long lastDayCount;
-    /**
-     * 最近一天调用成功次数
-     */
-    private long lastDayOkCount;
-    /**
-     * 最近一天调用失败次数
-     */
-    private long lastDayErrorCount;
-    /**
-     * 最近一天调用成功率
-     */
-    private double lastDaySuccessRate;
-    /**
-     * 最近一天调用请求最小时间
-     */
-    private long lastDayMinMills;
-    /**
-     * 最近一天调用请求最大时间
-     */
-    private long lastDayMaxMills;
-    /**
-     * 最近一天调用请求平均时间
-     */
-    private long lastDayAvgMills;
-    /**
-     * 最近一天最长延时请求日期
-     */
-    private Date lastDayMaxInvokeAt;
-    /**
-     * 上次请求时间
+     * 上次请求耗时
      */
     private long lastMills;
     /**
      * 上次请求日期
      */
     private Date lastInvokeAt;
-
 
     public String getMethod() {
         return method;
@@ -170,70 +138,6 @@ public class MethodAccessInfo {
         this.maxInvokeAt = maxInvokeAt;
     }
 
-    public long getLastDayCount() {
-        return lastDayCount;
-    }
-
-    public void setLastDayCount(long lastDayCount) {
-        this.lastDayCount = lastDayCount;
-    }
-
-    public long getLastDayOkCount() {
-        return lastDayOkCount;
-    }
-
-    public void setLastDayOkCount(long lastDayOkCount) {
-        this.lastDayOkCount = lastDayOkCount;
-    }
-
-    public long getLastDayErrorCount() {
-        return lastDayErrorCount;
-    }
-
-    public void setLastDayErrorCount(long lastDayErrorCount) {
-        this.lastDayErrorCount = lastDayErrorCount;
-    }
-
-    public double getLastDaySuccessRate() {
-        return lastDaySuccessRate;
-    }
-
-    public void setLastDaySuccessRate(double lastDaySuccessRate) {
-        this.lastDaySuccessRate = lastDaySuccessRate;
-    }
-
-    public long getLastDayMinMills() {
-        return lastDayMinMills;
-    }
-
-    public void setLastDayMinMills(long lastDayMinMills) {
-        this.lastDayMinMills = lastDayMinMills;
-    }
-
-    public long getLastDayMaxMills() {
-        return lastDayMaxMills;
-    }
-
-    public void setLastDayMaxMills(long lastDayMaxMills) {
-        this.lastDayMaxMills = lastDayMaxMills;
-    }
-
-    public long getLastDayAvgMills() {
-        return lastDayAvgMills;
-    }
-
-    public void setLastDayAvgMills(long lastDayAvgMills) {
-        this.lastDayAvgMills = lastDayAvgMills;
-    }
-
-    public Date getLastDayMaxInvokeAt() {
-        return lastDayMaxInvokeAt;
-    }
-
-    public void setLastDayMaxInvokeAt(Date lastDayMaxInvokeAt) {
-        this.lastDayMaxInvokeAt = lastDayMaxInvokeAt;
-    }
-
     public long getLastMills() {
         return lastMills;
     }
@@ -254,19 +158,13 @@ public class MethodAccessInfo {
         this.minMills = useTime;
         this.maxMills = useTime;
         this.avgMills = useTime;
-        this.lastDayMinMills = useTime;
-        this.lastDayMaxMills = useTime;
-        this.lastDayAvgMills = useTime;
         this.lastMills = useTime;
     }
 
-    public void setNewDayData(long useTime) {
-        this.lastDayCount = 0;
-        this.lastDayErrorCount = 0;
-        this.lastDayOkCount = 0;
-        this.lastDayAvgMills = useTime;
-        this.lastDayMinMills = useTime;
-        this.lastDayMaxMills = useTime;
-        this.lastDayMaxInvokeAt = new Date();
+    public boolean checkNewDay() {
+        Calendar now = Calendar.getInstance();
+        Calendar lastInvokeAt = Calendar.getInstance();
+        lastInvokeAt.setTime(this.lastInvokeAt);
+        return lastInvokeAt.get(Calendar.MONTH) != now.get(Calendar.MONTH) || lastInvokeAt.get(Calendar.DAY_OF_MONTH) != now.get(Calendar.DAY_OF_MONTH);
     }
 }

@@ -26,8 +26,23 @@ public class EzProfilerProperties {
     @Value("${ezprofiler.basepackage:com}")
     private String basePackage = "com";
 
-    @Value("${ezprofiler.mongoDb.uri}")
-    private String uri;
+    @Value("${ezprofiler.mongoDb.host}")
+    private String host;
+
+    @Value("${ezprofiler.mongoDb.port}")
+    private int port;
+
+    @Value("${ezprofiler.mongoDb.dataBaseName:profiler_statistics}")
+    private String dataBaseName = "profiler_statistics";
+
+    @Value("${ezprofiler.mongoDb.tableName}")
+    private String tableName;
+
+    @Value("${ezprofiler.mongoDb.username:}")
+    private String dbUserName = null;
+
+    @Value("${ezprofiler.mongoDb.password:}")
+    private String dbPassword = null;
 
     public boolean isEnableBasic() {
         return enableBasic;
@@ -69,11 +84,51 @@ public class EzProfilerProperties {
         this.basePackage = basePackage;
     }
 
-    public String getUri() {
-        return uri;
+    public String getHost() {
+        return host;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public String getDataBaseName() {
+        return dataBaseName;
+    }
+
+    public void setDataBaseName(String dataBaseName) {
+        this.dataBaseName = dataBaseName;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+    public String getDbUserName() {
+        return dbUserName;
+    }
+
+    public void setDbUserName(String dbUserName) {
+        this.dbUserName = dbUserName;
+    }
+
+    public String getDbPassword() {
+        return dbPassword;
+    }
+
+    public void setDbPassword(String dbPassword) {
+        this.dbPassword = dbPassword;
     }
 }
