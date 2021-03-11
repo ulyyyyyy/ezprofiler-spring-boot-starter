@@ -12,9 +12,9 @@
 2. 添加依赖
 ```xml
 <dependency>
-  <groupId>com.lilith.ezProfiler</groupId>
+  <groupId>com.lilithqa.ezProfiler</groupId>
   <artifactId>ezprofiler-spring-boot-starter</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2</version>
 </dependency>
 ```
 3. 添加配置
@@ -38,14 +38,6 @@ public class EzProfilerConfigure {
 		"maxMills": 0,      //最大用时
 		"avgMills": 0,       //平均用时
 		"maxInvokeAt": "2018-08-09 10:28:08", //最大用时发生时间点
-		"lastDayCount": 2,  //最近一天总调用次数
-		"lastDayOkCount": 2,//最近一天成功次数
-		"lastDayErrorCount": 0,//最近一天失败次数
-        "lastSuccessRate": 1,// 最近一天成功率
-		"lastDayMinMills": 0,//最近一天最小用时
-		"lastDayMaxMills": 0,//最近一天最大用时
-		"lastDayAvgMills": 0,//最近一天平均用时
-		"lastDayMaxInvokeAt": "2018-08-09 10:28:12",//最近一天最大用时发生时间点
 		"lastMills": 0,       //上次用时
 		"lastInvokeAt": "2018-08-09 10:30:11"//上次调用时间点
 	}]
@@ -62,21 +54,31 @@ public String world() {
   return "world";
 }
 ```
-2. 默认会给统计接口加上权限验证，默认的用户名：lilith_ltd，密码：lilith_ltd，可以自定义：
-```html
-ezprofiler.enableBasic=true
-ezprofiler.username={username}
-ezprofiler.password={password}
+2. 统计接口可以权限验证，默认的用户名：lilith_ltd，密码：lilith_ltd，可以自定义：
+```yaml
+ezprofiler:
+  enableBasic: false
+  username: {username}
+  password: {password}
 ```
+*注意：在测试服测试中，一旦打开权限验证则无法正常打开统计页面，原因可能跟中间隔了一层网关有关系*
 3. 默认的profiler的访问路径是/profiler，可以自定义:
-```html
-ezprofiler.url=/my/profiler
+```yaml
+ezprofiler:
+  url: /my/profiler
 ```
 4.可以自定义要扫描的controller的base package，默认是com
-```html
-ezprofiler.basepackage=com
+```yaml
+ezprofiler:
+  basepackage: com
 ```
 5.可以自定义mongoDb数据库 Uri，无默认Uri
-```html
-ezprofiler.mongoDb.uri={数据库地址}
+```yaml
+ezprofiler:
+  mongoDb:
+    host: 127.0.0.1
+    port: 27017
+    tableName: "jiracenter"
+    username: "lilith"
+    password: "lilith@624"
 ```
