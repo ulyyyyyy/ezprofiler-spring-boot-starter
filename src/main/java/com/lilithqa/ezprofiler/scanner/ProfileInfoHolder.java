@@ -44,6 +44,7 @@ public class ProfileInfoHolder {
         Class<?> controllerClazz = profileInfo.getClazz();
         Method method = profileInfo.getMethod();
         ControllerAccessInfo cai = MAP.get(controllerClazz.getSimpleName());
+
         if (cai == null) {
             cai = new ControllerAccessInfo();
             cai.setControllerClazz(controllerClazz);
@@ -63,8 +64,10 @@ public class ProfileInfoHolder {
             mai.setInvokeCount(1);
             if (occurError) {
                 mai.setErrorCount(1);
+                mai.setSuccessRate(0.0);
             } else {
                 mai.setOkCount(1);
+                mai.setSuccessRate(1.0);
             }
             // 更新数据
             mai.setFirstData(useTime);
@@ -84,6 +87,7 @@ public class ProfileInfoHolder {
                 // 插入数据
                 MyMongoTemplate myMongoTemplate = new MyMongoTemplate(properties);
                 myMongoTemplate.setMethodAccessInfo(aggregateInformation);
+                myMongoTemplate.getMongoClient().close();
             } catch (Exception e ) {
                 e.printStackTrace();
                 System.err.println(e.getMessage());
@@ -95,8 +99,10 @@ public class ProfileInfoHolder {
             mai.setInvokeCount(1);
             if (occurError) {
                 mai.setErrorCount(1);
+                mai.setSuccessRate(0.0);
             } else {
                 mai.setOkCount(1);
+                mai.setSuccessRate(1.0);
             }
             // 更新数据
             mai.setFirstData(useTime);
@@ -117,6 +123,7 @@ public class ProfileInfoHolder {
             } else {
                 mai.setOkCount(mai.getOkCount() + 1);
             }
+            mai.setSuccessRate((double) (mai.getOkCount() + mai.getErrorCount()) / mai.getOkCount());
             mai.setAvgMills((mai.getAvgMills() * mai.getOkCount() + useTime) / mai.getOkCount() + 1);
             mai.setLastInvokeAt(new Date());
             mai.setLastMills(useTime);

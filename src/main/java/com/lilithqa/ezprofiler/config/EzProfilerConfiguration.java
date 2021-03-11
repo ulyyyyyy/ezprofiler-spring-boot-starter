@@ -1,7 +1,6 @@
 package com.lilithqa.ezprofiler.config;
 
 import com.lilithqa.ezprofiler.controller.EzProfilerController;
-import com.mongodb.MongoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

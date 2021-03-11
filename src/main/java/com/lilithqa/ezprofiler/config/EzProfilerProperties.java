@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class EzProfilerProperties {
 
-    @Value("${ezprofiler.enableBasic:true}")
-    private boolean enableBasic = true;
+    @Value("${ezprofiler.enableBasic:false}")
+    private boolean enableBasic = false;
 
     @Value("${ezprofiler.username:lilith_ltd}")
     private String username = "lilith_ltd";
