@@ -2,12 +2,10 @@ package com.lilithqa.ezprofiler.repository;
 
 import com.lilithqa.ezprofiler.config.EzProfilerProperties;
 import com.lilithqa.ezprofiler.scanner.AggregateInformation;
-import com.lilithqa.ezprofiler.util.DocumentUtil;
 import com.lilithqa.ezprofiler.util.JsonUtils;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
@@ -18,7 +16,9 @@ import java.util.ArrayList;
 
 
 /**
- * @author Administrator
+ * 数据库链接
+ * @author 黑黑
+ * @date 2021-03-10
  */
 @Component
 public class MyMongoTemplate {
