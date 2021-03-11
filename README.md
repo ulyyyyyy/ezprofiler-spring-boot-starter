@@ -12,19 +12,24 @@
 2. 添加依赖
 ```xml
 <dependency>
-  <groupId>com.lilithqa.ezProfiler</groupId>
+  <groupId>com.lilithqa.ezprofiler</groupId>
   <artifactId>ezprofiler-spring-boot-starter</artifactId>
   <version>0.0.2</version>
 </dependency>
 ```
-3. 添加配置
+3. 添加 EzProfilerConfigure.java 配置类，代码如下
 ```java
 @EnableProfiler
 @Configuration
 public class EzProfilerConfigure {
+    @Bean
+    public EzProfilerProperties profilerProperties() {
+        return new EzProfilerProperties();
+    }
 }
 ```
-4.项目启动以后，访问浏览器 http://localhost:8080/profiler , 输出结果类似：
+4.配置 application.yaml 文件
+5.项目启动以后，访问浏览器 http://localhost:8080/profiler , 输出结果类似：
 ```json
 {
 	"DemoController": [{
@@ -82,3 +87,4 @@ ezprofiler:
     username: "lilith"
     password: "lilith@624"
 ```
+
