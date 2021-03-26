@@ -88,6 +88,7 @@ public class ProfileInfoHolder {
                 MyMongoTemplate myMongoTemplate = new MyMongoTemplate(properties);
                 myMongoTemplate.setMethodAccessInfo(aggregateInformation);
                 myMongoTemplate.getMongoClient().close();
+
             } catch (Exception e ) {
                 e.printStackTrace();
                 System.err.println(e.getMessage());
@@ -123,7 +124,7 @@ public class ProfileInfoHolder {
             } else {
                 mai.setOkCount(mai.getOkCount() + 1);
             }
-            mai.setSuccessRate((double) (mai.getOkCount() + mai.getErrorCount()) / mai.getOkCount());
+            mai.setSuccessRate((double) mai.getOkCount() / (mai.getOkCount() + mai.getErrorCount()));
             mai.setAvgMills((mai.getAvgMills() * mai.getOkCount() + useTime) / mai.getOkCount() + 1);
             mai.setLastInvokeAt(new Date());
             mai.setLastMills(useTime);

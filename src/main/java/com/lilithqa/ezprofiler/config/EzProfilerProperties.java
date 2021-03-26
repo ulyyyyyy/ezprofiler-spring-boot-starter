@@ -20,29 +20,20 @@ public class EzProfilerProperties {
     @Value("${ezprofiler.password:lilith_ltd}")
     private String password = "lilith_ltd";
 
-    @Value("${ezprofiler.url:/profiler}")
-    private String url = "/profiler";
+    @Value("${ezprofiler.path:/profiler}")
+    private String path = "/profiler";
 
     @Value("${ezprofiler.basepackage:com}")
     private String basePackage = "com";
 
-    @Value("${ezprofiler.mongoDb.host}")
-    private String host;
+    @Value("${ezprofiler.mongoDb.uri}")
+    private String uri;
 
-    @Value("${ezprofiler.mongoDb.port}")
-    private int port;
+    @Value("${ezprofiler.mongoDb.dataBaseName}")
+    private String dataBaseName;
 
-    @Value("${ezprofiler.mongoDb.dataBaseName:profiler_statistics}")
-    private String dataBaseName = "profiler_statistics";
-
-    @Value("${ezprofiler.mongoDb.tableName}")
-    private String tableName;
-
-    @Value("${ezprofiler.mongoDb.username:}")
-    private String dbUserName = null;
-
-    @Value("${ezprofiler.mongoDb.password:}")
-    private String dbPassword = null;
+    @Value("${ezprofiler.mongoDb.dbTableName}")
+    private String dbTableName;
 
     public boolean isEnableBasic() {
         return enableBasic;
@@ -68,12 +59,12 @@ public class EzProfilerProperties {
         this.password = password;
     }
 
-    public String getUrl() {
-        return url;
+    public String getPath() {
+        return path;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public String getBasePackage() {
@@ -84,20 +75,12 @@ public class EzProfilerProperties {
         this.basePackage = basePackage;
     }
 
-    public String getHost() {
-        return host;
+    public String getUri() {
+        return uri;
     }
 
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public String getDataBaseName() {
@@ -108,27 +91,11 @@ public class EzProfilerProperties {
         this.dataBaseName = dataBaseName;
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getDbTableName() {
+        return dbTableName;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
-
-    public String getDbUserName() {
-        return dbUserName;
-    }
-
-    public void setDbUserName(String dbUserName) {
-        this.dbUserName = dbUserName;
-    }
-
-    public String getDbPassword() {
-        return dbPassword;
-    }
-
-    public void setDbPassword(String dbPassword) {
-        this.dbPassword = dbPassword;
+    public void setDbTableName(String dbTableName) {
+        this.dbTableName = dbTableName;
     }
 }
