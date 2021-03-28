@@ -29,8 +29,8 @@ public class EzProfilerProperties {
     @Value("${ezprofiler.mongoDb.uri}")
     private String uri;
 
-    @Value("${ezprofiler.mongoDb.dataBaseName}")
-    private String dataBaseName;
+    @Value("${ezprofiler.mongoDb.dataBaseName:profiler_statistics}")
+    private String dataBaseName = "profiler_statistics";
 
     @Value("${ezprofiler.mongoDb.dbTableName}")
     private String dbTableName;

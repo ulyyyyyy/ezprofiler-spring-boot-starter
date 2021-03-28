@@ -4,6 +4,7 @@ import com.lilithqa.ezprofiler.config.EzProfilerProperties;
 import com.lilithqa.ezprofiler.scanner.AggregateInformation;
 import com.lilithqa.ezprofiler.util.JsonUtils;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
@@ -23,7 +24,7 @@ public class MyMongoTemplate {
     // 改成单例模式
     public MyMongoTemplate(EzProfilerProperties properties) {
         String uri = properties.getUri();
-        this.mongoClient = new MongoClient(uri);
+        this.mongoClient = new MongoClient(new MongoClientURI(uri));
         this.properties = properties;
     }
 
