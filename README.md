@@ -8,7 +8,6 @@
 ```sh
 下载源码，命令行执行：maven clean install
 ```
-
 2. 添加依赖
 ```xml
 <dependency>
@@ -29,6 +28,7 @@ public class EzProfilerConfigure {
 }
 ```
 4.配置 application.yaml 文件
+
 5.项目启动以后，访问浏览器 http://localhost:8080/profiler , 输出结果类似：
 ```json
 {
@@ -59,6 +59,7 @@ public String world() {
   return "world";
 }
 ```
+
 2. 统计接口可以权限验证，默认的用户名：lilith_ltd，密码：lilith_ltd，可以自定义：
 ```yaml
 ezprofiler:
@@ -67,24 +68,24 @@ ezprofiler:
   password: {password}
 ```
 *注意：在测试服测试中，一旦打开权限验证则无法正常打开统计页面，原因可能跟中间隔了一层网关有关系*
+
 3. 默认的profiler的访问路径是/profiler，可以自定义:
 ```yaml
 ezprofiler:
-  url: /my/profiler
+  url: /profiler
 ```
 4.可以自定义要扫描的controller的base package，默认是com
 ```yaml
 ezprofiler:
   basepackage: com
 ```
-5.可以自定义mongoDb数据库 Uri，无默认Uri
+
+5.可以自定义mongoDb数据库 Uri，数据库默认地址： profiler_statistics
 ```yaml
 ezprofiler:
   mongoDb:
-    host: 127.0.0.1
-    port: 27017
-    tableName: "jiracenter"
-    username: "lilith"
-    password: "lilith@624"
+    uri: mongodb://{username}:{password}@{host}:{port}/?authSource=admin&authMechanism=SCRAM-SHA-1
+    dataBaseName: profiler_statistics
+    dbTableName: "jiracenter"
 ```
 
