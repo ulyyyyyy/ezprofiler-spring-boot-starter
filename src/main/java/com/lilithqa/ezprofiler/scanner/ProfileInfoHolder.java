@@ -6,11 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -28,7 +24,7 @@ public class ProfileInfoHolder {
         ProfileInfoHolder.properties = properties;
     }
 
-    private static final ConcurrentHashMap<String, ControllerAccessInfo> MAP = new ConcurrentHashMap<>();
+    private static final AggregateInformation AGGREGATE_INFORMATION = new AggregateInformation();
 
     /**
      * 统计Profiler数据
@@ -43,12 +39,13 @@ public class ProfileInfoHolder {
         boolean occurError = profileInfo.isOccurError();
         Class<?> controllerClazz = profileInfo.getClazz();
         Method method = profileInfo.getMethod();
-        ControllerAccessInfo cai = MAP.get(controllerClazz.getSimpleName());
+        ConcurrentHashMap<String, ControllerAccessInfo> map = AGGREGATE_INFORMATION.getMap();
+        ControllerAccessInfo cai = map.get(controllerClazz.getSimpleName());
 
         if (cai == null) {
             cai = new ControllerAccessInfo();
             cai.setControllerClazz(controllerClazz);
-            MAP.put(controllerClazz.getSimpleName(), cai);
+            map.put(controllerClazz.getSimpleName(), cai);
         }
         List<MethodAccessInfo> mais = cai.getMethodInfos();
         if (mais == null) {
@@ -74,21 +71,24 @@ public class ProfileInfoHolder {
             mai.setMaxInvokeAt(new Date());
             mai.setLastInvokeAt(new Date());
             mais.add(mai);
-        } else if (mai.checkNewDay()) {
+        } else if (AGGREGATE_INFORMATION.checkNewDay()) {
             try {
-                AggregateInformation aggregateInformation = new AggregateInformation();
-                aggregateInformation.setMap(MAP);
-                Date now = new Date();
-                SimpleDateFormat format0 = new SimpleDateFormat("yyyy-MM-dd");
-                // 把时间戳经过处理得到期望格式的时间
-                String time = format0.format(now.getTime());
-                aggregateInformation.setDate(time);
+                AGGREGATE_INFORMATION.setMap(map);
+
+                // 添加昨日时间
+                Date lastDay;
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_MONTH, -1);
+                lastDay = calendar.getTime();
+                SimpleDateFormat standardFormat = new SimpleDateFormat("yyyy-MM-dd");
+                // 把时间经过处理得到期望格式的时间
+                String time = standardFormat.format(lastDay.getTime());
+                AGGREGATE_INFORMATION.setDate(time);
 
                 // 插入数据
                 MyMongoTemplate myMongoTemplate = new MyMongoTemplate(properties);
-                myMongoTemplate.setMethodAccessInfo(aggregateInformation);
+                myMongoTemplate.setMethodAccessInfo(AGGREGATE_INFORMATION);
                 myMongoTemplate.getMongoClient().close();
-
             } catch (Exception e ) {
                 e.printStackTrace();
                 System.err.println(e.getMessage());
@@ -153,8 +153,9 @@ public class ProfileInfoHolder {
      * @return Map
      */
     public static Map<String, Object> getAllAccessInfo() {
-        Map<String, Object> result = new HashMap<>(MAP.keySet().size());
-        for (Map.Entry<String, ControllerAccessInfo> entry : MAP.entrySet()) {
+        final ConcurrentHashMap<String, ControllerAccessInfo> map = AGGREGATE_INFORMATION.getMap();
+        Map<String, Object> result = new HashMap<>(map.keySet().size());
+        for (Map.Entry<String, ControllerAccessInfo> entry : map.entrySet()) {
             ControllerAccessInfo cai = entry.getValue();
             result.put(cai.getControllerClazz().getSimpleName(), cai.getMethodInfos());
         }

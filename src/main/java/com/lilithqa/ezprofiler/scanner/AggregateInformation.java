@@ -1,5 +1,9 @@
 package com.lilithqa.ezprofiler.scanner;
 
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -41,5 +45,27 @@ public class AggregateInformation {
                 "map=" + map +
                 ", date='" + date + '\'' +
                 '}';
+    }
+
+    public boolean checkNewDay() {
+        Collection<ControllerAccessInfo> values = map.values();
+        SimpleDateFormat standardFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date now = new Date();
+        Date maxLastInvokeAt = null;
+        for (ControllerAccessInfo controllerAccessInfo : values) {
+            List<MethodAccessInfo> methodInfos = controllerAccessInfo.getMethodInfos();
+            for (MethodAccessInfo methodAccessInfo: methodInfos) {
+                if (maxLastInvokeAt == null) {
+                    maxLastInvokeAt = methodAccessInfo.getLastInvokeAt();
+                } else {
+                    maxLastInvokeAt = (maxLastInvokeAt.after(methodAccessInfo.getLastInvokeAt()))? maxLastInvokeAt : methodAccessInfo.getLastInvokeAt();
+                }
+            }
+        }
+
+        String nowStr = standardFormat.format(now);
+        String lastInvoke = standardFormat.format(maxLastInvokeAt);
+        return nowStr.equals(lastInvoke);
     }
 }

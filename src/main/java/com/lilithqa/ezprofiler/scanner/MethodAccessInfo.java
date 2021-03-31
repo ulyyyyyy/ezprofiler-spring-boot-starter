@@ -160,11 +160,4 @@ public class MethodAccessInfo {
         this.avgMills = useTime;
         this.lastMills = useTime;
     }
-
-    public boolean checkNewDay() {
-        Calendar now = Calendar.getInstance();
-        Calendar lastInvokeAt = Calendar.getInstance();
-        lastInvokeAt.setTime(this.lastInvokeAt);
-        return lastInvokeAt.get(Calendar.MONTH) != now.get(Calendar.MONTH) || lastInvokeAt.get(Calendar.DAY_OF_MONTH) != now.get(Calendar.DAY_OF_MONTH);
-    }
 }
