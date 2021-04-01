@@ -16,10 +16,15 @@ public class AggregateInformation {
     /**
      * key为各控制层类，value为各方法调用信息
      */
-    private ConcurrentHashMap<String, ControllerAccessInfo> map;
+    private ConcurrentHashMap<String, ControllerAccessInfo> map = new ConcurrentHashMap<>();
 
     /**
-     * 入库时间
+     * 上次调用时间
+     */
+    private Date lastInvokeTime = new Date();
+
+    /**
+     * 入库日期
      */
     private String date;
 
@@ -39,6 +44,17 @@ public class AggregateInformation {
         this.date = date;
     }
 
+    public Date getLastInvokeTime() {
+        return lastInvokeTime;
+    }
+
+    public void setLastInvokeTime(Date lastInvokeTime) {
+        this.lastInvokeTime = lastInvokeTime;
+    }
+
+    public AggregateInformation() {
+    }
+
     @Override
     public String toString() {
         return "AggregateInformation{" +
@@ -48,24 +64,15 @@ public class AggregateInformation {
     }
 
     public boolean checkNewDay() {
-        Collection<ControllerAccessInfo> values = map.values();
         SimpleDateFormat standardFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         Date now = new Date();
-        Date maxLastInvokeAt = null;
-        for (ControllerAccessInfo controllerAccessInfo : values) {
-            List<MethodAccessInfo> methodInfos = controllerAccessInfo.getMethodInfos();
-            for (MethodAccessInfo methodAccessInfo: methodInfos) {
-                if (maxLastInvokeAt == null) {
-                    maxLastInvokeAt = methodAccessInfo.getLastInvokeAt();
-                } else {
-                    maxLastInvokeAt = (maxLastInvokeAt.after(methodAccessInfo.getLastInvokeAt()))? maxLastInvokeAt : methodAccessInfo.getLastInvokeAt();
-                }
-            }
-        }
-
         String nowStr = standardFormat.format(now);
-        String lastInvoke = standardFormat.format(maxLastInvokeAt);
-        return nowStr.equals(lastInvoke);
+        String lastInvoke = standardFormat.format(this.lastInvokeTime);
+
+        System.out.println("上次调用日期：" + lastInvoke);
+        System.out.println("当前调用日期：" + nowStr);
+
+        return !nowStr.equals(lastInvoke);
     }
 }

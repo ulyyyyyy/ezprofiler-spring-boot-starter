@@ -160,4 +160,23 @@ public class MethodAccessInfo {
         this.avgMills = useTime;
         this.lastMills = useTime;
     }
+
+    public MethodAccessInfo(String methodName, String uri, boolean occurError, long useTime) {
+        this.setMethod(methodName);
+        this.setUri(uri);
+        this.setInvokeCount(1);
+        if (occurError) {
+            this.setErrorCount(1);
+            this.setSuccessRate(0.0);
+        } else {
+            this.setOkCount(1);
+            this.setSuccessRate(1.0);
+        }
+        // 更新数据
+        this.setFirstData(useTime);
+        this.setMaxInvokeAt(new Date());
+        this.setLastInvokeAt(new Date());
+    }
+
+
 }

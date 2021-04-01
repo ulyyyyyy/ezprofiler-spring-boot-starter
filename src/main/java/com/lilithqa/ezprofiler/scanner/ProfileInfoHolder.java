@@ -4,6 +4,7 @@ import com.lilithqa.ezprofiler.config.EzProfilerProperties;
 import com.lilithqa.ezprofiler.repository.MyMongoTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -54,61 +55,9 @@ public class ProfileInfoHolder {
         }
         MethodAccessInfo mai = getMethodAccessInfo(mais, method);
 
-        if (mai == null || mai.getOkCount() + mai.getErrorCount() == 0) {
-            mai = new MethodAccessInfo();
-            mai.setMethod(method.getName());
-            mai.setUri(uri);
-            mai.setInvokeCount(1);
-            if (occurError) {
-                mai.setErrorCount(1);
-                mai.setSuccessRate(0.0);
-            } else {
-                mai.setOkCount(1);
-                mai.setSuccessRate(1.0);
-            }
-            // 更新数据
-            mai.setFirstData(useTime);
-            mai.setMaxInvokeAt(new Date());
-            mai.setLastInvokeAt(new Date());
-            mais.add(mai);
-        } else if (AGGREGATE_INFORMATION.checkNewDay()) {
-            try {
-                AGGREGATE_INFORMATION.setMap(map);
-
-                // 添加昨日时间
-                Date lastDay;
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DAY_OF_MONTH, -1);
-                lastDay = calendar.getTime();
-                SimpleDateFormat standardFormat = new SimpleDateFormat("yyyy-MM-dd");
-                // 把时间经过处理得到期望格式的时间
-                String time = standardFormat.format(lastDay.getTime());
-                AGGREGATE_INFORMATION.setDate(time);
-
-                // 插入数据
-                MyMongoTemplate myMongoTemplate = new MyMongoTemplate(properties);
-                myMongoTemplate.setMethodAccessInfo(AGGREGATE_INFORMATION);
-                myMongoTemplate.getMongoClient().close();
-            } catch (Exception e ) {
-                e.printStackTrace();
-                System.err.println(e.getMessage());
-            }
-            mais.removeIf( methodAccessInfo -> method.getName().equals(methodAccessInfo.getMethod()));
-            mai = new MethodAccessInfo();
-            mai.setMethod(method.getName());
-            mai.setUri(uri);
-            mai.setInvokeCount(1);
-            if (occurError) {
-                mai.setErrorCount(1);
-                mai.setSuccessRate(0.0);
-            } else {
-                mai.setOkCount(1);
-                mai.setSuccessRate(1.0);
-            }
-            // 更新数据
-            mai.setFirstData(useTime);
-            mai.setMaxInvokeAt(new Date());
-            mai.setLastInvokeAt(new Date());
+        // 如果没有找到对应数据，则创建一条新的数据，将本次信息添加进新数据中
+        if (mai == null) {
+            mai = new MethodAccessInfo(method.getName(), uri, occurError, useTime);
             mais.add(mai);
         } else {
             if (useTime < mai.getMinMills()) {
@@ -129,6 +78,32 @@ public class ProfileInfoHolder {
             mai.setLastInvokeAt(new Date());
             mai.setLastMills(useTime);
         }
+        if (AGGREGATE_INFORMATION.checkNewDay()) {
+            try {
+                AGGREGATE_INFORMATION.setMap(map);
+                // 添加昨日时间
+                Date lastDay;
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_MONTH, -1);
+                lastDay = calendar.getTime();
+                SimpleDateFormat standardFormat = new SimpleDateFormat("yyyy-MM-dd");
+                // 把时间经过处理得到期望格式的时间
+                String time = standardFormat.format(lastDay.getTime());
+                AGGREGATE_INFORMATION.setDate(time);
+
+                // 插入数据
+                MyMongoTemplate myMongoTemplate = new MyMongoTemplate(properties);
+                myMongoTemplate.setMethodAccessInfo(AGGREGATE_INFORMATION);
+                myMongoTemplate.getMongoClient().close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println(e.getMessage());
+            }
+            // 更新Map
+            AGGREGATE_INFORMATION.setMap(new ConcurrentHashMap<>());
+        }
+        // 更新上次访问时间
+        AGGREGATE_INFORMATION.setLastInvokeTime(new Date());
     }
 
     /**
