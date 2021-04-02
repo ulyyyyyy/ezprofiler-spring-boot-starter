@@ -1,9 +1,7 @@
 package com.lilithqa.ezprofiler.scanner;
 
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**

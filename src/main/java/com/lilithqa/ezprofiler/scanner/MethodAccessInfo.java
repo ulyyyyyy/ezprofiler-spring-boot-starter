@@ -1,6 +1,5 @@
 package com.lilithqa.ezprofiler.scanner;
 
-import java.util.Calendar;
 import java.util.Date;
 
 /**
