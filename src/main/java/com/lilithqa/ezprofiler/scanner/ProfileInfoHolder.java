@@ -75,6 +75,7 @@ public class ProfileInfoHolder {
             }
             mai.setSuccessRate((double) mai.getOkCount() / (mai.getOkCount() + mai.getErrorCount()));
             mai.setAvgMills((mai.getAvgMills() * mai.getOkCount() + useTime) / mai.getOkCount() + 1);
+            System.out.println(mai.getAvgMills());
             mai.setLastInvokeAt(new Date());
             mai.setLastMills(useTime);
         }

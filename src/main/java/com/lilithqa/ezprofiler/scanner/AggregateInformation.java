@@ -67,10 +67,6 @@ public class AggregateInformation {
         Date now = new Date();
         String nowStr = standardFormat.format(now);
         String lastInvoke = standardFormat.format(this.lastInvokeTime);
-
-        System.out.println("上次调用日期：" + lastInvoke);
-        System.out.println("当前调用日期：" + nowStr);
-
         return !nowStr.equals(lastInvoke);
     }
 }
