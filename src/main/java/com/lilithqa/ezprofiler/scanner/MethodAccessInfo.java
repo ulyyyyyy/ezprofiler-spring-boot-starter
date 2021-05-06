@@ -176,6 +176,4 @@ public class MethodAccessInfo {
         this.setMaxInvokeAt(new Date());
         this.setLastInvokeAt(new Date());
     }
-
-
 }

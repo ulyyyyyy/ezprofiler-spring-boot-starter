@@ -54,7 +54,6 @@ public class ProfileInfoHolder {
             cai.setMethodInfos(mais);
         }
         MethodAccessInfo mai = getMethodAccessInfo(mais, method);
-
         // 如果没有找到对应数据，则创建一条新的数据，将本次信息添加进新数据中
         if (mai == null) {
             mai = new MethodAccessInfo(method.getName(), uri, occurError, useTime);
@@ -74,8 +73,8 @@ public class ProfileInfoHolder {
                 mai.setOkCount(mai.getOkCount() + 1);
             }
             mai.setSuccessRate((double) mai.getOkCount() / (mai.getOkCount() + mai.getErrorCount()));
-            mai.setAvgMills((mai.getAvgMills() * mai.getOkCount() + useTime) / mai.getOkCount() + 1);
-            System.out.println(mai.getAvgMills());
+
+            mai.setAvgMills((mai.getAvgMills() * mai.getOkCount() + useTime) / (mai.getOkCount() + 1));
             mai.setLastInvokeAt(new Date());
             mai.setLastMills(useTime);
         }
