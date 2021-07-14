@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author 黑黑
- * @apiNote ezProfiler参数类
- * @date 2018年4月12日 下午2:59:56<br/>
  */
 @Component
 public class EzProfilerProperties {
@@ -15,10 +13,10 @@ public class EzProfilerProperties {
     private boolean enableBasic = false;
 
     @Value("${ezprofiler.username:lilith_ltd}")
-    private String username = "lilith_ltd";
+    private String username = "test";
 
     @Value("${ezprofiler.password:lilith_ltd}")
-    private String password = "lilith_ltd";
+    private String password = "test";
 
     @Value("${ezprofiler.path:/profiler}")
     private String path = "/profiler";

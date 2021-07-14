@@ -5,8 +5,6 @@ import java.util.List;
 
 /**
  * @author 黑黑
- * @apiNote 入库数据
- * @date 2021-03-04
  */
 public class ControllerAccessInfo {
     /**

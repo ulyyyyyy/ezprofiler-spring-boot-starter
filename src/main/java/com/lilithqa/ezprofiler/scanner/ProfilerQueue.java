@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author 黑黑
- * @apiNote 工作队列。由于请求是多线程，所以统计的内部字段都要求线程安全，以确保能正常统计数据
- * @date 2021-03-04
  */
 public class ProfilerQueue{
 	

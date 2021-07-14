@@ -4,8 +4,6 @@ import java.lang.reflect.Method;
 
 /**
  * @author 黑黑
- * @apiNote 单次调用统计数据类
- * @date 2018年4月12日 下午4:11:29<br/>
  */
 public class ProfileInfo {
     /**

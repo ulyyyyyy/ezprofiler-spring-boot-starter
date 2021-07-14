@@ -22,8 +22,6 @@ import com.lilithqa.ezprofiler.config.EzProfilerProperties;
 
 /**
  * @author 黑黑
- * @apiNote 控制层扫描类
- * @date 2021-03-04
  */
 @Service
 public class ControllerScanner implements BeanPostProcessor {

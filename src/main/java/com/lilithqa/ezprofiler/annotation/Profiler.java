@@ -6,8 +6,6 @@ import org.springframework.core.annotation.AliasFor;
 
 /**
  * @author 黑黑
- * @apiNote Profiler 自定义注解参数接口
- * @date 2021-03-04
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})

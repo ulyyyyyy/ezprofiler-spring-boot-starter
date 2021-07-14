@@ -23,8 +23,6 @@ import org.springframework.web.util.UriTemplate;
 
 /**
  * @author 黑黑
- * @apiNote
- * @date 2018年7月2日 上午8:21:14<br/>
  */
 public class PropertySourcedRequestMappingHandlerMapping extends RequestMappingHandlerMapping {
 
@@ -89,9 +87,9 @@ public class PropertySourcedRequestMappingHandlerMapping extends RequestMappingH
 	}
 
 	/**
-	 * 判断注解类型是否存在再
+	 * 判断注解类型是否存在
 	 * @param beanType 方法类型
-	 * @return
+	 * @return boolean
 	 */
 	@Override
 	protected boolean isHandler(Class<?> beanType) {

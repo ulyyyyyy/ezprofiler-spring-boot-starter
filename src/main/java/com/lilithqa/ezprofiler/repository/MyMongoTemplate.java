@@ -13,7 +13,6 @@ import org.bson.Document;
  * 数据库链接
  *
  * @author 黑黑
- * @date 2021-03-10
  */
 public class MyMongoTemplate {
 

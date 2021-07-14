@@ -11,8 +11,6 @@ import com.lilithqa.ezprofiler.mapping.PropertySourcedRequestMappingHandlerMappi
 
 /**
  * @author 黑黑
- * @apiNote ezProfiler配置类
- * @date 2021-03-04
  */
 @Configuration
 @ComponentScan(basePackages =

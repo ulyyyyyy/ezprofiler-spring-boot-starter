@@ -5,9 +5,7 @@ import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @apiNote 总信息
  * @author 黑黑
- * @date 2021-03-09
  */
 public class AggregateInformation {
 

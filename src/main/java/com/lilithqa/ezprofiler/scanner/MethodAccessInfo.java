@@ -4,8 +4,6 @@ import java.util.Date;
 
 /**
  * @author 黑黑
- * @apiNote 方法请求调用统计数据类
- * @date 2021-03-04
  */
 public class MethodAccessInfo {
     /**

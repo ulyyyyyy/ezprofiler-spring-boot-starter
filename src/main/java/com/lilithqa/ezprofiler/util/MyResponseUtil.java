@@ -5,8 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author 黑黑
- * @apiNote web响应类
- * @date 2018年4月12日 下午3:03:48
  */
 public class MyResponseUtil {
 

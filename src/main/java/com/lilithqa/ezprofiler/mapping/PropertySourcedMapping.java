@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.Mapping;
 
 /**
  * @author 黑黑
- * @apiNote
- * @date 2021-03-04
  */
 @Target({ ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

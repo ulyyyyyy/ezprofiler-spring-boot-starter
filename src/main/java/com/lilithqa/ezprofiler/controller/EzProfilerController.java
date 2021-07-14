@@ -18,8 +18,6 @@ import com.lilithqa.ezprofiler.util.MyResponseUtil;
 
 /**
  * @author 黑黑
- * @apiNote 拦截器Controller层
- * @date 2018年4月12日 下午3:02:53<br/>
  */
 @RestController
 @Profiler(false)

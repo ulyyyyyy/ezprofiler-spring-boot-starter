@@ -12,8 +12,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author 黑黑
- * @apiNote Profiler数据统计类
- * @date 2017年9月21日 下午3:02:30<br/>
  */
 @Component
 public class ProfileInfoHolder {
